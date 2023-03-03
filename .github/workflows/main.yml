@@ -1,12 +1,25 @@
+name: dast-scan-action
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  kics-job:
+    runs-on: ubuntu-latest
+    name: dast-action
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
     # Scan Iac with kics
-    - name: Checkmarx DAST Github Action
+    - name: run kics Scan
       uses: Checkmarx/dast-github-action@v1.0.0-beta
-      env:
-        CX_APIKEY: ${{ secrets.CX_ONE_API_KEY }}
       with:
         command: "web"
         config: 'zap_config.yaml'
