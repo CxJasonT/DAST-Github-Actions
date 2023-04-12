@@ -1,29 +1,36 @@
-name: dast-scan-action
+name: CxDAST_JT_web
 
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches:
-      - main
+   branches: [ "main" ]
   pull_request:
-    branches:
-      - main
+   branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  kics-job:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    name: dast-action
-    # Steps represent a sequence of tasks that will be executed as part of the job
+
+   # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-    # Scan Iac with kics
-    - name: run kics Scan
+    - uses: actions/checkout@v3
+    # Scan DAST
+    - name: Checkmarx DAST Github Action
       uses: Checkmarx/dast-github-action@v1.0.0-beta
+      env:
+        CX_APIKEY: ${{ secrets.CX_ONE_API_KEY }}
       with:
         command: "web"
         config: 'security_tweets.yaml'
         base_url: "http://testhtml5.vulnweb.com"
         environment_id: "f4b85c89-a720-4c21-8379-8a9535e98fde"
-        #fail_on: "HIGH"
         verbose: true
+        log_level: debug
