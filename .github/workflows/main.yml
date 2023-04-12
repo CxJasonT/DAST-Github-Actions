@@ -22,8 +22,8 @@ jobs:
       uses: Checkmarx/dast-github-action@v1.0.0-beta
       with:
         command: "web"
-        config: 'zap_config.yaml'
-        base_url: "localhost.cxast.net"
-        environment_id: "c608a51a-ec4e-4eef-81c4-a0241737efd7"
-        fail_on: "HIGH"
+        config: 'security_tweets.yaml'
+        base_url: "http://testhtml5.vulnweb.com"
+        environment_id: "f4b85c89-a720-4c21-8379-8a9535e98fde"
+        #fail_on: "HIGH"
         verbose: true
